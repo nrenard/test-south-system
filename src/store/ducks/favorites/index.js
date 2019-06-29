@@ -40,7 +40,7 @@ export default function books(state = INITIAL_STATE, { type, payload }) {
     case Types.SET_FAVORITES:
       return {
         ...state,
-        list: [...state.list, payload.book],
+        list: [payload.book, ...state.list],
       };
 
     case Types.DELETE_FAVORITE:

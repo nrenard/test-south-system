@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+
+import { Creators } from '../../../../store/ducks/books';
 
 import BuyButton from '../../../BuyButton';
 
@@ -16,46 +19,60 @@ import {
   Description,
 } from './styles';
 
-import { WrapperInfo, Actions } from '../../styles';
+import { WrapperInfo, Actions, Favorite } from '../../styles';
 
-const ModalDetail = ({
-  isActive,
-  closeModal,
-  book: {
-    thumbnail, title, publisher, isSale, buyLink, description,
-  },
-}) => (
-  <ModalWrapper isActive={isActive} onClick={closeModal}>
-    <Container onClick={event => event.stopPropagation()}>
-      <CloseModal onClick={closeModal}>fechar</CloseModal>
+const ModalDetail = ({ isActive, closeModal, book }) => {
+  const dispatch = useDispatch();
 
-      <WrapperHader>
-        <Image src={thumbnail} alt={title} />
+  const {
+    thumbnail, title, publisher, isSale, buyLink, description, isFavorite, id,
+  } = book;
 
-        <RightHeader>
-          <Title>{title}</Title>
-          <Publisher>{publisher}</Publisher>
+  useEffect(() => () => {
+    document.body.style.overflow = 'initial';
+  }, []);
 
-          <WrapperInfo isSale={isSale}>
-            <strong>{isSale ? 'disponível' : 'indisponível'}</strong>
+  const toggleFavorite = () => {
+    if (!isFavorite) {
+      dispatch(Creators.setFavorite(book));
+    } else {
+      dispatch(Creators.deleteFavorite(id));
+    }
+  };
 
-            {isSale && (
+  return (
+    <ModalWrapper isActive={isActive} onClick={closeModal}>
+      <Container onClick={event => event.stopPropagation()}>
+        <CloseModal onClick={closeModal}>fechar</CloseModal>
+
+        <WrapperHader>
+          <Image src={thumbnail} alt={title} />
+
+          <RightHeader>
+            <Title>{title}</Title>
+            <Publisher>{publisher}</Publisher>
+
+            <WrapperInfo isSale={isSale}>
+              <strong>{isSale ? 'disponível' : 'indisponível'}</strong>
+
               <Actions>
-                <BuyButton link={buyLink} />
+                <Favorite onClick={toggleFavorite}>
+                  {isFavorite ? 'desfavoritar' : 'favoritar'}
+                </Favorite>
+                {isSale && <BuyButton link={buyLink} />}
               </Actions>
-            )}
-          </WrapperInfo>
-        </RightHeader>
-      </WrapperHader>
+            </WrapperInfo>
+          </RightHeader>
+        </WrapperHader>
 
-      <DescriptionWrapper>
-        <strong>Descrição</strong>
-
-        <Description>{description}</Description>
-      </DescriptionWrapper>
-    </Container>
-  </ModalWrapper>
-);
+        <DescriptionWrapper>
+          <strong>Descrição</strong>
+          <Description>{description}</Description>
+        </DescriptionWrapper>
+      </Container>
+    </ModalWrapper>
+  );
+};
 
 ModalDetail.propTypes = {
   isActive: PropTypes.bool.isRequired,
@@ -67,6 +84,8 @@ ModalDetail.propTypes = {
     description: PropTypes.string.isRequired,
     isSale: PropTypes.bool.isRequired,
     buyLink: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
   }).isRequired,
 };
 

@@ -1,3 +1,9 @@
 import React from 'react';
 
-export default () => <h2>Loading...</h2>;
+import { Container, Loader } from './styles';
+
+export default () => (
+  <Container>
+    <Loader />
+  </Container>
+);

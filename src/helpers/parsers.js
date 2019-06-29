@@ -13,6 +13,6 @@ export const parseBooks = (item, list) => {
     description: item.volumeInfo.description,
     publisher: item.volumeInfo.publisher,
     isSale,
-    isFavorite: !!(list && list.filter(book => book.id === item.id)),
+    isFavorite: !!(list && list.find(book => book.id === item.id)),
   };
 };

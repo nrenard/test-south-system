@@ -5,22 +5,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Creators } from '../../store/ducks/books';
 
 import Header from './partials/Header';
-import BookList from './partials/BookList';
+import BookList from '../../components/BookList';
+import Loader from '../../components/Loader';
 
 import { Container } from './styles';
 
 const Home = () => {
-  const storeBooks = useSelector(({ books }) => books);
+  const { list, loading } = useSelector(({ books }) => books);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!storeBooks.list) dispatch(Creators.getBooks('react'));
-  }, [storeBooks.list, dispatch]);
+    if (!list) dispatch(Creators.getBooks('react'));
+  }, [list, dispatch]);
 
   return (
     <Container>
       <Header />
-      <BookList />
+      {list && !loading && <BookList list={list} />}
+      {loading && !list && <Loader />}
     </Container>
   );
 };

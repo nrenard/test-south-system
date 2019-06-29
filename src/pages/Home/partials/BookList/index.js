@@ -6,7 +6,7 @@ import Pagination from '../../../../components/Pagination';
 
 import { Container, NotHasBooks } from './styles';
 
-const ListBooks = () => {
+const BookList = () => {
   const { list } = useSelector(({ books }) => books);
 
   return (
@@ -25,4 +25,4 @@ const ListBooks = () => {
   );
 };
 
-export default ListBooks;
+export default BookList;

@@ -1,20 +1,21 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { Creators } from '../../store/ducks/favorites';
+import BookList from '../../components/BookList';
+import Header from './partials/Header';
 
 import { Container } from './styles';
 
-const Home = () => {
-  const booksFavorites = useSelector(({ favorites }) => favorites);
-  const dispatch = useDispatch();
+const Favorites = () => {
+  const { list } = useSelector(({ favorites }) => favorites);
 
-  useEffect(() => {
-    if (!booksFavorites.list) dispatch(Creators.getFavorites());
-  }, [booksFavorites.list, dispatch]);
-  console.log('booksFavorites: ', booksFavorites);
-  return <Container>aeeoo</Container>;
+  return (
+    <Container>
+      <Header />
+      <BookList list={list} />
+    </Container>
+  );
 };
 
-export default memo(Home);
+export default memo(Favorites);

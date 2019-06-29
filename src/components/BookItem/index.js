@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import { useDispatch } from 'react-redux';
 
 import { Creators } from '../../store/ducks/books';
@@ -27,7 +26,7 @@ const BookItem = ({ book }) => {
   const dispatch = useDispatch();
 
   const {
-    title, smallThumbnail, isSale, description, buyLink, amount, isFavorite, id,
+    title, smallThumbnail, isSale, description, buyLink, isFavorite, id,
   } = book;
 
   const openModal = () => {
@@ -45,7 +44,7 @@ const BookItem = ({ book }) => {
   };
 
   const toggleFavorite = () => {
-    if (isFavorite) dispatch(Creators.setFavorite(id));
+    if (!isFavorite) dispatch(Creators.setFavorite(book));
     else dispatch(Creators.deleteFavorite(id));
   };
 
@@ -56,20 +55,17 @@ const BookItem = ({ book }) => {
       </WrapperImage>
 
       <Title onClick={openModal}>{title}</Title>
-      {amount}
+
       <Description>{description}</Description>
 
       <WrapperInfo isSale={isSale}>
         <strong>{isSale ? 'disponível' : 'indisponível'}</strong>
 
-        {isSale && (
-          <Actions>
-            <Favorite onClick={toggleFavorite}>
-              {isFavorite ? 'desfavoritar' : 'favoritar'}
-            </Favorite>
-            <BuyButton link={buyLink} />
-          </Actions>
-        )}
+        <Actions>
+          <Favorite onClick={toggleFavorite}>{isFavorite ? 'desfavoritar' : 'favoritar'}</Favorite>
+
+          {isSale && <BuyButton link={buyLink} />}
+        </Actions>
       </WrapperInfo>
 
       <ModalDetail isActive={detailModal} book={book} closeModal={closeModal} />

@@ -25,14 +25,10 @@ export const Creators = {
     type: Types.GET_BOOKS_SUCCESS,
     payload: { data },
   }),
-  setFavorite: (id) => {
-    console.log('aee');
-
-    return {
-      type: Types.SET_FAVORITE,
-      payload: { id },
-    };
-  },
+  setFavorite: book => ({
+    type: Types.SET_FAVORITE,
+    payload: { book },
+  }),
   deleteFavorite: id => ({
     type: Types.DELETE_FAVORITE,
     payload: { id },
@@ -56,7 +52,7 @@ export default function books(state = INITIAL_STATE, { type, payload }) {
       return {
         ...state,
         list: state.list.map((book) => {
-          if (book.id === payload.id) {
+          if (book.id === payload.book.id) {
             book.isFavorite = true;
             return book;
           }
@@ -68,14 +64,16 @@ export default function books(state = INITIAL_STATE, { type, payload }) {
     case Types.DELETE_FAVORITE:
       return {
         ...state,
-        list: state.list.map((book) => {
-          if (book.id === payload.id) {
-            book.isFavorite = false;
-            return book;
-          }
+        list: state.list
+          ? state.list.map((book) => {
+            if (book.id === payload.id) {
+              book.isFavorite = false;
+              return book;
+            }
 
-          return book;
-        }),
+            return book;
+          })
+          : null,
       };
 
     default:

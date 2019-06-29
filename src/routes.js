@@ -10,11 +10,11 @@ const defatultLodable = path =>
     loading: () => <Loader />,
   });
 
-const src = () => (
+const Routes = () => (
   <Switch>
     <Route path="/" exact component={defatultLodable('Home')} />
     <Route path="/favorites" exact component={defatultLodable('Favorites')} />
   </Switch>
 );
 
-export default src;
+export default Routes;

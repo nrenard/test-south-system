@@ -19,20 +19,34 @@ export function* getFavorites() {
   }
 }
 
-export function* setFavorites({ payload: { book } }) {
-  const favoritesStore = select(({ favorites }) => favorites);
-  console.log('favoritesStore: ', favoritesStore);
-  // try {
-  //   setFavoritesService();
-  //   yield put(Creators.getFavoritesSuccess(favoritesStore || []));
-  // } catch (err) {
-  //   console.log('err: ', err);
-  // }
+export function* setFavorites({ payload }) {
+  const { list } = yield select(({ favorites }) => favorites);
+  try {
+    const favorites = list ? [payload.book, ...list] : [payload.book];
+
+    setFavoritesService(favorites);
+    yield put(Creators.setFavorites(payload.book));
+  } catch (err) {
+    console.log('err: ', err);
+  }
+}
+
+export function* deleteFavorites({ payload }) {
+  const { list } = yield select(({ favorites }) => favorites);
+  try {
+    const favorites = list.filter(book => book.id !== payload.id);
+
+    setFavoritesService(favorites);
+    yield put(Creators.deleteFavorites(payload.id));
+  } catch (err) {
+    console.log('err: ', err);
+  }
 }
 
 export default function* booksSaga() {
   yield all([
     takeLatest(Types.GET_FAVORITES, getFavorites),
     takeLatest(BookTypes.SET_FAVORITE, setFavorites),
+    takeLatest(BookTypes.DELETE_FAVORITE, deleteFavorites),
   ]);
 }

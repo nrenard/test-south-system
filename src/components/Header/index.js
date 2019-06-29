@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+
+import { useSelector, useDispatch } from 'react-redux';
+
+import { Creators } from '../../store/ducks/favorites';
 
 import {
   HeaderStyles, Container, Logo, Nav,
@@ -7,23 +11,36 @@ import {
 
 import logo from '../../images/logo.png';
 
-const Header = () => (
-  <HeaderStyles>
-    <Container>
-      <Link to="/">
-        <Logo src={logo} alt="React Boilerplate" />
-      </Link>
+const Header = () => {
+  const { list } = useSelector(({ favorites }) => favorites);
+  const dispatch = useDispatch();
 
-      <Nav>
-        <NavLink to="/" exact>
-          Livros
-        </NavLink>
-        <NavLink exact to="/favorites">
-          Favoritos (0)
-        </NavLink>
-      </Nav>
-    </Container>
-  </HeaderStyles>
-);
+  useEffect(() => {
+    if (!list) dispatch(Creators.getFavorites());
+  }, [list, dispatch]);
+
+  const favoritesLength = list ? list.length : 0;
+
+  return (
+    <HeaderStyles>
+      <Container>
+        <Link to="/">
+          <Logo src={logo} alt="React Boilerplate" />
+        </Link>
+
+        <Nav>
+          <NavLink to="/" exact>
+            Livros
+          </NavLink>
+          <NavLink exact to="/favorites">
+            Favoritos
+            {' '}
+            {`(${favoritesLength})`}
+          </NavLink>
+        </Nav>
+      </Container>
+    </HeaderStyles>
+  );
+};
 
 export default Header;
