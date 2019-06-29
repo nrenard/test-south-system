@@ -2,7 +2,8 @@ export const Types = {
   GET_BOOKS: 'books/GET_BOOKS',
   GET_BOOKS_SUCCESS: 'books/GET_BOOKS_SUCCESS',
 
-  DELETE_USER: 'books/DELETE_USER',
+  SET_FAVORITE: 'books/SET_FAVORITE',
+  DELETE_FAVORITE: 'books/DELETE_FAVORITE',
 };
 
 const INITIAL_STATE = {
@@ -24,6 +25,18 @@ export const Creators = {
     type: Types.GET_BOOKS_SUCCESS,
     payload: { data },
   }),
+  setFavorite: (id) => {
+    console.log('aee');
+
+    return {
+      type: Types.SET_FAVORITE,
+      payload: { id },
+    };
+  },
+  deleteFavorite: id => ({
+    type: Types.DELETE_FAVORITE,
+    payload: { id },
+  }),
 };
 
 export default function books(state = INITIAL_STATE, { type, payload }) {
@@ -37,6 +50,32 @@ export default function books(state = INITIAL_STATE, { type, payload }) {
         list: payload.data.list,
         pagination: payload.data.pagination,
         loading: false,
+      };
+
+    case Types.SET_FAVORITE:
+      return {
+        ...state,
+        list: state.list.map((book) => {
+          if (book.id === payload.id) {
+            book.isFavorite = true;
+            return book;
+          }
+
+          return book;
+        }),
+      };
+
+    case Types.DELETE_FAVORITE:
+      return {
+        ...state,
+        list: state.list.map((book) => {
+          if (book.id === payload.id) {
+            book.isFavorite = false;
+            return book;
+          }
+
+          return book;
+        }),
       };
 
     default:

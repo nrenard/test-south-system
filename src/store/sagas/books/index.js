@@ -1,11 +1,11 @@
 import {
-  all, takeLatest, call, put,
+  all, takeLatest, call, put, select,
 } from 'redux-saga/effects';
 
 import { requestBooks } from './api';
 import { parseBooks } from '../../../helpers/parsers';
 
-import { Creators as BookActions, Types as TypesActions } from '../../ducks/books';
+import { Creators, Types } from '../../ducks/books';
 
 import { maxResults } from './constants';
 
@@ -20,9 +20,15 @@ export function* getBooks({ payload }) {
       startIndex: startIndex < 0 ? 0 : startIndex,
     });
 
+    const {
+      favorites: { list },
+    } = yield select(store => store);
+
     yield put(
-      BookActions.getBooksSuccess({
-        list: books.items ? books.items.map(parseBooks) : [],
+      Creators.getBooksSuccess({
+        list: books.items
+          ? books.items.map(item => (list && list.length ? parseBooks(item, list) : parseBooks(item)))
+          : [],
         pagination: {
           pages: Math.floor(books.totalItems / maxResults),
           total: books.totalItems,
@@ -36,5 +42,5 @@ export function* getBooks({ payload }) {
 }
 
 export default function* booksSaga() {
-  yield all([takeLatest(TypesActions.GET_BOOKS, getBooks)]);
+  yield all([takeLatest(Types.GET_BOOKS, getBooks)]);
 }

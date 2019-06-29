@@ -1,7 +1,9 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
-import books from "./books";
+import books from './books';
+import favorites from './favorites';
 
 export default combineReducers({
-  books
+  books,
+  favorites,
 });
