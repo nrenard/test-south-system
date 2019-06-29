@@ -1,51 +1,37 @@
-import { all, takeLatest, call, put } from "redux-saga/effects";
+import {
+  all, takeLatest, call, put,
+} from 'redux-saga/effects';
 
-import { requestBooks } from "./api";
+import { requestBooks } from './api';
+import { parseBooks } from '../../../helpers/parsers';
 
-import { Creators as BookActions } from "../../ducks/books";
-import { Types as TypesActions } from "../../ducks/books";
+import { Creators as BookActions, Types as TypesActions } from '../../ducks/books';
 
-import { maxResults } from "./constants";
-
-const parseItems = item => {
-  const isSale = item.saleInfo.saleability !== "NOT_FOR_SALE";
-
-  return {
-    id: item.id,
-    amount: isSale ? item.saleInfo.listPrice.amount : 0,
-    title: item.volumeInfo.title,
-    thumbnail: item.volumeInfo.imageLinks.thumbnail,
-    smallThumbnail: item.volumeInfo.imageLinks.smallThumbnail,
-    previewLink: item.volumeInfo.previewLink,
-    description: item.volumeInfo.description,
-    publisher: item.volumeInfo.publisher,
-    isSale
-  };
-};
+import { maxResults } from './constants';
 
 export function* getBooks({ payload }) {
-  const page = payload.page;
-  const query = payload.query;
+  const { page } = payload;
+  const { query } = payload;
   const startIndex = maxResults * page - 1;
 
   try {
     const books = yield call(requestBooks, {
       query,
-      startIndex: startIndex < 0 ? 0 : startIndex
+      startIndex: startIndex < 0 ? 0 : startIndex,
     });
 
     yield put(
       BookActions.getBooksSuccess({
-        list: books.items ? books.items.map(parseItems) : [],
+        list: books.items ? books.items.map(parseBooks) : [],
         pagination: {
           pages: Math.floor(books.totalItems / maxResults),
           total: books.totalItems,
-          page
-        }
-      })
+          page,
+        },
+      }),
     );
   } catch (err) {
-    console.log("err: ", err);
+    console.log('err: ', err);
   }
 }
 

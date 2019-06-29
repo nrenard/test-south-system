@@ -1,6 +1,6 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from 'styled-components';
 
-import { container } from "./mixins";
+import { container } from './mixins';
 
 export const Container = styled.div`
   ${container};

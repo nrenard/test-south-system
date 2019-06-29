@@ -1,10 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  flex: 1;
+`;
 
 export const InputStyle = styled.input`
   width: 100%;
   padding: 15px;
+  height: 50px;
   border-radius: 4px;
   background-color: transparent;
   color: #fff;

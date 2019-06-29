@@ -1,18 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import { ThemeProvider } from "styled-components";
-import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
+import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-import GlobalStyles from "./styles/global";
-import theme from "./styles/theme";
+import GlobalStyles, { Container } from './styles/global';
+import theme from './styles/theme';
 
-import Header from "./components/Header";
-import Routes from "./routes";
+import Header from './components/Header';
+import Routes from './routes';
 
-import { Container } from "./styles/global";
-
-import store from "./store";
+import store from './store';
 
 export default () => (
   <Provider store={store}>

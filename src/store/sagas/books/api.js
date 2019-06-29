@@ -1,10 +1,8 @@
-import api from "../../../services/api";
+import api from '../../../services/api';
 
-import { maxResults } from "./constants";
+import { maxResults } from './constants';
 
 export const requestBooks = async ({ query, startIndex = 0 }) => {
-  const data = await api.get(
-    `?q=${query}&maxResults=${maxResults}&startIndex=${startIndex}`
-  );
+  const data = await api.get(`?q=${query}&maxResults=${maxResults}&startIndex=${startIndex}`);
   return data;
 };

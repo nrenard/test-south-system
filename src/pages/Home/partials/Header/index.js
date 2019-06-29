@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { Creators } from "../../../../store/ducks/books";
+import { Creators } from '../../../../store/ducks/books';
 
-import Input from "../../../../components/Input";
+import Input from '../../../../components/Input';
+import Button from '../../../../components/Button';
 
-import { Container, Form } from "./styles";
+import { Container, Form } from './styles';
 
 const Header = () => {
-  const [search, changeSearch] = useState("");
+  const [search, changeSearch] = useState('');
   const dispatch = useDispatch();
 
-  const getBooks = event => {
+  const getBooks = (event) => {
     if (event) event.preventDefault();
     dispatch(Creators.getBooks(search));
   };
@@ -25,6 +26,8 @@ const Header = () => {
           value={search}
           onChange={({ target }) => changeSearch(target.value)}
         />
+
+        <Button>Buscar</Button>
       </Form>
     </Container>
   );

@@ -1,20 +1,21 @@
-import React, { memo, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { memo, useEffect } from 'react';
 
-import { Creators } from "../../store/ducks/books";
+import { useSelector, useDispatch } from 'react-redux';
 
-import Header from "./partials/Header";
-import BookList from "./partials/BookList";
+import { Creators } from '../../store/ducks/books';
 
-import { Container } from "./styles";
+import Header from './partials/Header';
+import BookList from './partials/BookList';
+
+import { Container } from './styles';
 
 const Home = () => {
-  const books = useSelector(({ books }) => books);
+  const storeBooks = useSelector(({ books }) => books);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!books.list) dispatch(Creators.getBooks("react"));
-  }, [books.list, dispatch]);
+    if (!storeBooks.list) dispatch(Creators.getBooks('react'));
+  }, [storeBooks.list, dispatch]);
 
   return (
     <Container>

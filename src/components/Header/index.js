@@ -1,9 +1,11 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
-import { HeaderStyles, Container, Logo, Nav } from "./styles";
+import {
+  HeaderStyles, Container, Logo, Nav,
+} from './styles';
 
-import logo from "../../images/logo.png";
+import logo from '../../images/logo.png';
 
 const Header = () => (
   <HeaderStyles>

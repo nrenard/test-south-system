@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { container, simpleFlex } from "../../styles/mixins";
+import { container, simpleFlex } from '../../styles/mixins';
 
 export const HeaderStyles = styled.header`
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
