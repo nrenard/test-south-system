@@ -56,7 +56,7 @@ const BookItem = ({ book }) => {
 
       <Title onClick={openModal}>{title}</Title>
 
-      <Description>{description}</Description>
+      {description && <Description>{description}</Description>}
 
       <WrapperInfo isSale={isSale}>
         <strong>{isSale ? 'disponível' : 'indisponível'}</strong>
@@ -78,10 +78,10 @@ BookItem.propTypes = {
     title: PropTypes.string.isRequired,
     smallThumbnail: PropTypes.string.isRequired,
     isSale: PropTypes.bool.isRequired,
-    description: PropTypes.string.isRequired,
     isFavorite: PropTypes.bool.isRequired,
     id: PropTypes.string.isRequired,
     buyLink: PropTypes.string,
+    description: PropTypes.string,
   }).isRequired,
 };
 

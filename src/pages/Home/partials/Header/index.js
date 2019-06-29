@@ -14,7 +14,7 @@ const Header = () => {
 
   const getBooks = (event) => {
     if (event) event.preventDefault();
-    dispatch(Creators.getBooks(search));
+    dispatch(Creators.getBooks({ query: search }));
   };
 
   return (

@@ -25,8 +25,8 @@ export const CloseModal = styled.strong`
   text-transform: uppercase;
   position: absolute;
   font-size: 10px;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
 `;
 
 export const Container = styled.div`

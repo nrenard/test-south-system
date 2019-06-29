@@ -14,10 +14,11 @@ const INITIAL_STATE = {
     total: 0,
     page: 0,
   },
+  query: null,
 };
 
 export const Creators = {
-  getBooks: (query, page = 0) => ({
+  getBooks: ({ query, page = 0 }) => ({
     type: Types.GET_BOOKS,
     payload: { page, query },
   }),
@@ -38,7 +39,7 @@ export const Creators = {
 export default function books(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
     case Types.GET_BOOKS:
-      return { ...state, loading: true };
+      return { ...state, loading: true, query: payload.query || state.query };
 
     case Types.GET_BOOKS_SUCCESS:
       return {

@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BookItem from '../BookItem';
-import Pagination from '../Pagination';
+import SimplePagination from '../SimplePagination';
 
 import { Container, NotHasBooks } from './styles';
 
-const BookList = ({ list, pagination }) => (
+const BookList = ({ list, pagination, changePage }) => (
   <Container>
     {list && list.length ? (
       <>
         {list.map(book => (
           <BookItem book={book} key={book.id} />
         ))}
-        {pagination && <Pagination {...pagination} />}
+        {pagination && <SimplePagination {...pagination} changePage={changePage} />}
       </>
     ) : (
       <NotHasBooks>Nenhum livro encntrado.</NotHasBooks>
@@ -28,6 +28,7 @@ BookList.propTypes = {
     }),
   ).isRequired,
   pagination: PropTypes.object,
+  changePage: PropTypes.func,
 };
 
 export default BookList;

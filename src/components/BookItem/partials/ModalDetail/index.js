@@ -25,12 +25,15 @@ const ModalDetail = ({ isActive, closeModal, book }) => {
   const dispatch = useDispatch();
 
   const {
-    thumbnail, title, publisher, isSale, buyLink, description, isFavorite, id,
+    smallThumbnail, title, publisher, isSale, buyLink, description, isFavorite, id,
   } = book;
 
-  useEffect(() => () => {
-    document.body.style.overflow = 'initial';
-  }, []);
+  useEffect(
+    () => () => {
+      document.body.style.overflow = 'initial';
+    },
+    [],
+  );
 
   const toggleFavorite = () => {
     if (!isFavorite) {
@@ -46,7 +49,7 @@ const ModalDetail = ({ isActive, closeModal, book }) => {
         <CloseModal onClick={closeModal}>fechar</CloseModal>
 
         <WrapperHader>
-          <Image src={thumbnail} alt={title} />
+          <Image src={smallThumbnail} alt={title} />
 
           <RightHeader>
             <Title>{title}</Title>
@@ -65,10 +68,12 @@ const ModalDetail = ({ isActive, closeModal, book }) => {
           </RightHeader>
         </WrapperHader>
 
-        <DescriptionWrapper>
-          <strong>Descrição</strong>
-          <Description>{description}</Description>
-        </DescriptionWrapper>
+        {description && (
+          <DescriptionWrapper>
+            <strong>Descrição</strong>
+            <Description>{description}</Description>
+          </DescriptionWrapper>
+        )}
       </Container>
     </ModalWrapper>
   );
@@ -78,14 +83,14 @@ ModalDetail.propTypes = {
   isActive: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   book: PropTypes.shape({
-    thumbnail: PropTypes.string.isRequired,
+    smallThumbnail: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    publisher: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
     isSale: PropTypes.bool.isRequired,
     buyLink: PropTypes.string,
     id: PropTypes.string.isRequired,
     isFavorite: PropTypes.bool.isRequired,
+    description: PropTypes.string,
+    publisher: PropTypes.string,
   }).isRequired,
 };
 

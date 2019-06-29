@@ -11,17 +11,21 @@ import Loader from '../../components/Loader';
 import { Container } from './styles';
 
 const Home = () => {
-  const { list, loading } = useSelector(({ books }) => books);
+  const { list, loading, pagination } = useSelector(({ books }) => books);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!list) dispatch(Creators.getBooks('react'));
+    if (!list) dispatch(Creators.getBooks({ query: 'reactjs' }));
   }, [list, dispatch]);
+
+  const changePage = (page) => {
+    dispatch(Creators.getBooks({ page }));
+  };
 
   return (
     <Container>
       <Header />
-      {list && !loading && <BookList list={list} />}
+      {list && !loading && <BookList list={list} pagination={pagination} changePage={changePage} />}
       {loading && !list && <Loader />}
     </Container>
   );
