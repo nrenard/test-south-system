@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { Container as ContainerLoader } from '../../../../components/Loader/styles';
+
 import { simpleFlex } from '../../../../styles/mixins';
 
 export const Container = styled.div`
@@ -7,6 +9,10 @@ export const Container = styled.div`
   justify-content: center;
   width: 100%;
   padding: 30px 0;
+
+  ${ContainerLoader} {
+    margin: 0;
+  }
 `;
 
 export const ButtonMore = styled.button`

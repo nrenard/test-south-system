@@ -12,7 +12,6 @@ export default createGlobalStyle`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    outline: 0;
     text-decoration: none;
   }
 

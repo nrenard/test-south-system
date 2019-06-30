@@ -5,7 +5,8 @@ import { simpleFlex } from '../../../../styles/mixins';
 import { WrapperInfo } from '../../styles';
 
 export const ModalWrapper = styled.div`
-  ${simpleFlex};
+  display: block;
+  text-align: center;
   flex-wrap: wrap;
   justify-content: center;
   overflow: auto;
@@ -20,6 +21,15 @@ export const ModalWrapper = styled.div`
   z-index: 2;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
   visibility: ${({ isActive }) => (isActive ? 'visible' : 'hidden')};
+
+  @media (min-width: 768px) {
+    ${simpleFlex};
+  }
+`;
+
+export const Amount = styled.strong`
+  color: ${({ theme }) => theme.secondaryColor};
+  margin-top: 15px;
 `;
 
 export const CloseModal = styled.strong`
@@ -34,13 +44,18 @@ export const CloseModal = styled.strong`
 export const Container = styled.div`
   ${simpleFlex};
   flex-direction: column;
+  margin: auto;
   border-radius: 4px;
   background-color: #fff;
   position: relative;
-  width: 80%;
   overflow: auto;
   color: #000;
   padding: 30px 20px;
+  width: 90%;
+
+  @media (min-width: 768px) {
+    width: 60%;
+  }
 `;
 
 export const WrapperHader = styled.div`

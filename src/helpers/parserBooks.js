@@ -4,12 +4,13 @@ const noImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_av
 
 export default (item, listFavorites) => {
   const isSale = item.saleInfo.saleability !== 'NOT_FOR_SALE';
+  const amount = item.saleInfo.listPrice ? item.saleInfo.listPrice.amount : 0;
+
+  const parserAmount = amountHelper(amount);
 
   return {
     id: item.id,
-    amount: isSale
-      ? amountHelper(item.saleInfo.listPrice ? `${item.saleInfo.listPrice.amount}00` : 0)
-      : 0,
+    amount: parserAmount,
     title: item.volumeInfo.title,
     smallThumbnail: item.volumeInfo.imageLinks
       ? item.volumeInfo.imageLinks.smallThumbnail

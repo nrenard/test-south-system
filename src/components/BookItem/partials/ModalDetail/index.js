@@ -17,6 +17,7 @@ import {
   Title,
   DescriptionWrapper,
   Description,
+  Amount,
 } from './styles';
 
 import { WrapperInfo, Actions, Favorite } from '../../styles';
@@ -25,7 +26,15 @@ const ModalDetail = ({ isActive, closeModal, book }) => {
   const dispatch = useDispatch();
 
   const {
-    smallThumbnail, title, publisher, isSale, buyLink, description, isFavorite, id,
+    smallThumbnail,
+    title,
+    publisher,
+    isSale,
+    buyLink,
+    description,
+    isFavorite,
+    id,
+    amount,
   } = book;
 
   useEffect(
@@ -54,6 +63,7 @@ const ModalDetail = ({ isActive, closeModal, book }) => {
           <RightHeader>
             <Title>{title}</Title>
             <Publisher>{publisher}</Publisher>
+            {isSale && <Amount>{amount}</Amount>}
 
             <WrapperInfo isSale={isSale}>
               <strong>{isSale ? 'disponível' : 'indisponível'}</strong>
@@ -85,6 +95,7 @@ ModalDetail.propTypes = {
   book: PropTypes.shape({
     smallThumbnail: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    amount: PropTypes.string,
     isSale: PropTypes.bool.isRequired,
     buyLink: PropTypes.string,
     id: PropTypes.string.isRequired,
