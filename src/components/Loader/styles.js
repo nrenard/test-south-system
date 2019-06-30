@@ -5,8 +5,7 @@ import { simpleFlex } from '../../styles/mixins';
 export const Container = styled.div`
   ${simpleFlex};
   justify-content: center;
-
-  margin: 30px 0;
+  margin: 50px 0;
 `;
 
 const rotate = keyframes`

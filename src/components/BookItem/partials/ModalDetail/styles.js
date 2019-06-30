@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { simpleFlex } from '../../../../styles/mixins';
 
+import { WrapperInfo } from '../../styles';
+
 export const ModalWrapper = styled.div`
   ${simpleFlex};
   flex-wrap: wrap;
@@ -54,13 +56,27 @@ export const WrapperHader = styled.div`
 `;
 
 export const RightHeader = styled.div`
+  ${simpleFlex};
   margin-top: 20px;
-  display: flex;
   flex-direction: column;
-  align-items: flex-start;
+
+  ${WrapperInfo} {
+    strong {
+      margin-bottom: 10px;
+    }
+  }
 
   @media (min-width: 768px) {
     margin-left: 30px;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 330px) {
+    ${WrapperInfo} {
+      strong {
+        margin-bottom: 0;
+      }
+    }
   }
 `;
 

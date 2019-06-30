@@ -3,41 +3,45 @@ import {
 } from 'redux-saga/effects';
 
 import { requestBooks } from './api';
-import { parseBooks } from '../../../helpers/parsers';
+import parserBooks from '../../../helpers/parserBooks';
 
 import { Creators, Types } from '../../ducks/books';
 
 import { maxResults } from './constants';
 
 export function* getBooks({ payload }) {
-  const { page } = payload;
-  const startIndex = maxResults * page;
+  const { giveMeMore } = payload;
 
   try {
     const {
-      favorites: { list },
-      books: { query: queryStore },
+      favorites: { list: listFavorites },
+      books: { query: queryStore, pagination },
     } = yield select(store => store);
+
+    let startIndex = 0;
+    if (giveMeMore) startIndex = pagination.totalCaught + maxResults;
 
     const books = yield call(requestBooks, {
       query: queryStore,
-      startIndex: startIndex < 0 ? 0 : startIndex,
+      startIndex,
     });
 
     const total = books.totalItems;
-    console.log('total: ', total);
-    console.log('maxResults: ', maxResults);
-    console.log('total / maxResults: ', total / maxResults);
+    const hasMore = total > startIndex;
+
     yield put(
       Creators.getBooksSuccess({
         list: books.items
-          ? books.items.map(item => (list && list.length ? parseBooks(item, list) : parseBooks(item)))
+          ? books.items.map(item => (listFavorites && listFavorites.length
+            ? parserBooks(item, listFavorites)
+            : parserBooks(item)))
           : [],
         pagination: {
-          pages: Math.floor(total / maxResults),
           total,
-          page,
+          totalCaught: startIndex,
+          hasMore,
         },
+        giveMeMore,
       }),
     );
   } catch (err) {

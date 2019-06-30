@@ -4,7 +4,7 @@ import { simpleFlex } from '../../styles/mixins';
 
 export const Container = styled.div`
   ${simpleFlex};
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   margin-bottom: 30px;
 `;

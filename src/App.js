@@ -10,6 +10,8 @@ import theme from './styles/theme';
 import Header from './components/Header';
 import Routes from './routes';
 
+import BackToTop from './components/BackToTop';
+
 import store from './store';
 
 export default () => (
@@ -22,6 +24,8 @@ export default () => (
           <Container>
             <Routes />
           </Container>
+
+          <BackToTop />
         </>
       </BrowserRouter>
     </ThemeProvider>

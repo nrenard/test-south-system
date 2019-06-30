@@ -37,6 +37,8 @@ export const Title = styled.strong`
 
 export const WrapperInfo = styled.div`
   ${simpleFlex};
+  flex-wrap: wrap;
+  justify-content: center;
   margin: 20px 0 0;
 
   strong {

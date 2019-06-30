@@ -10,17 +10,17 @@ const INITIAL_STATE = {
   list: null,
   loading: false,
   pagination: {
-    pages: 0,
+    totalCaught: 0,
     total: 0,
-    page: 0,
+    hasMore: false,
   },
   query: null,
 };
 
 export const Creators = {
-  getBooks: ({ query, page = 0 }) => ({
+  getBooks: ({ query, giveMeMore = false }) => ({
     type: Types.GET_BOOKS,
-    payload: { page, query },
+    payload: { query, giveMeMore },
   }),
   getBooksSuccess: data => ({
     type: Types.GET_BOOKS_SUCCESS,
@@ -44,7 +44,7 @@ export default function books(state = INITIAL_STATE, { type, payload }) {
     case Types.GET_BOOKS_SUCCESS:
       return {
         ...state,
-        list: payload.data.list,
+        list: payload.data.giveMeMore ? [...state.list, ...payload.data.list] : payload.data.list,
         pagination: payload.data.pagination,
         loading: false,
       };

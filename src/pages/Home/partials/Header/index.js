@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Creators } from '../../../../store/ducks/books';
 
 import Input from '../../../../components/Input';
 import Button from '../../../../components/Button';
+import Loader from '../../../../components/Loader';
 
 import { Container, Form } from './styles';
 
 const Header = () => {
   const [search, changeSearch] = useState('');
+
+  const { loading } = useSelector(({ books }) => books);
   const dispatch = useDispatch();
 
   const getBooks = (event) => {
     if (event) event.preventDefault();
     dispatch(Creators.getBooks({ query: search }));
+    changeSearch('');
   };
 
   return (
@@ -27,7 +31,7 @@ const Header = () => {
           onChange={({ target }) => changeSearch(target.value)}
         />
 
-        <Button>Buscar</Button>
+        <Button>{!loading ? 'Buscar' : <Loader />}</Button>
       </Form>
     </Container>
   );
