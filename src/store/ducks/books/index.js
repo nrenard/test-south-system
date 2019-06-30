@@ -4,9 +4,11 @@ export const Types = {
 
   SET_FAVORITE: 'books/SET_FAVORITE',
   DELETE_FAVORITE: 'books/DELETE_FAVORITE',
+
+  SET_ERROR: 'books/SET_ERROR',
 };
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   list: null,
   loading: false,
   pagination: {
@@ -15,6 +17,7 @@ const INITIAL_STATE = {
     hasMore: false,
   },
   query: null,
+  error: null,
 };
 
 export const Creators = {
@@ -22,9 +25,9 @@ export const Creators = {
     type: Types.GET_BOOKS,
     payload: { query, giveMeMore },
   }),
-  getBooksSuccess: data => ({
+  getBooksSuccess: payload => ({
     type: Types.GET_BOOKS_SUCCESS,
-    payload: { data },
+    payload,
   }),
   setFavorite: book => ({
     type: Types.SET_FAVORITE,
@@ -33,6 +36,10 @@ export const Creators = {
   deleteFavorite: id => ({
     type: Types.DELETE_FAVORITE,
     payload: { id },
+  }),
+  setError: error => ({
+    type: Types.SET_ERROR,
+    payload: { error },
   }),
 };
 
@@ -44,20 +51,17 @@ export default function books(state = INITIAL_STATE, { type, payload }) {
     case Types.GET_BOOKS_SUCCESS:
       return {
         ...state,
-        list: payload.data.giveMeMore ? [...state.list, ...payload.data.list] : payload.data.list,
-        pagination: payload.data.pagination,
+        list: payload.giveMeMore ? [...state.list, ...payload.list] : payload.list,
+        pagination: payload.pagination,
         loading: false,
+        error: null,
       };
 
     case Types.SET_FAVORITE:
       return {
         ...state,
         list: state.list.map((book) => {
-          if (book.id === payload.book.id) {
-            book.isFavorite = true;
-            return book;
-          }
-
+          if (book.id === payload.book.id) return payload.book;
           return book;
         }),
       };
@@ -67,14 +71,18 @@ export default function books(state = INITIAL_STATE, { type, payload }) {
         ...state,
         list: state.list
           ? state.list.map((book) => {
-            if (book.id === payload.id) {
-              book.isFavorite = false;
-              return book;
-            }
+            if (book.id === payload.id) return { ...book, isFavorite: false };
 
             return book;
           })
           : null,
+      };
+
+    case Types.SET_ERROR:
+      return {
+        ...state,
+        error: payload.error,
+        loading: false,
       };
 
     default:

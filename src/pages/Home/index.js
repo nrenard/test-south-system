@@ -9,10 +9,10 @@ import Loader from '../../components/Loader';
 
 import SimpleMoreLoading from './partials/SimpleMoreLoading';
 
-import { Container } from './styles';
+import { Container, MessageError } from './styles';
 
 const Home = () => {
-  const { list, pagination } = useSelector(({ books }) => books);
+  const { list, pagination, error } = useSelector(({ books }) => books);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,6 +22,9 @@ const Home = () => {
   return (
     <Container>
       <Header />
+
+      {error && <MessageError>{error}</MessageError>}
+
       {list ? (
         <>
           <BookList list={list} pagination={pagination} />

@@ -7,7 +7,7 @@ export const Types = {
   DELETE_FAVORITE: 'favotires/DELETE_FAVORITE',
 };
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   list: null,
 };
 
@@ -15,9 +15,9 @@ export const Creators = {
   getFavorites: () => ({
     type: Types.GET_FAVORITES,
   }),
-  getFavoritesSuccess: data => ({
+  getFavoritesSuccess: list => ({
     type: Types.GET_FAVORITES_SUCCESS,
-    payload: { data },
+    payload: { list },
   }),
   setFavorites: book => ({
     type: Types.SET_FAVORITES,
@@ -34,7 +34,7 @@ export default function books(state = INITIAL_STATE, { type, payload }) {
     case Types.GET_FAVORITES_SUCCESS:
       return {
         ...state,
-        list: payload.data,
+        list: payload.list,
       };
 
     case Types.SET_FAVORITES:

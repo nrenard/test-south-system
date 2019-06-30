@@ -9,6 +9,7 @@ import { Container, ButtonMore } from './styles';
 
 const SimpleMoreLoading = () => {
   const {
+    list,
     loading,
     pagination: { hasMore },
   } = useSelector(({ books }) => books);
@@ -19,13 +20,15 @@ const SimpleMoreLoading = () => {
   };
 
   return (
-    <Container>
-      {hasMore ? (
-        <>{!loading ? <ButtonMore onClick={giveMeMore}>Ver Mais</ButtonMore> : <Loader />}</>
-      ) : (
-        'Não há mais livros nessa segmentação.'
-      )}
-    </Container>
+    !!list.length && (
+      <Container>
+        {hasMore ? (
+          <>{!loading ? <ButtonMore onClick={giveMeMore}>Ver Mais</ButtonMore> : <Loader />}</>
+        ) : (
+          'Não há mais livros nessa segmentação.'
+        )}
+      </Container>
+    )
   );
 };
 export default SimpleMoreLoading;

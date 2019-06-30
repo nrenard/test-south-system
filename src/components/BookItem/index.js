@@ -28,7 +28,7 @@ const BookItem = ({ book }) => {
   const {
     title, smallThumbnail, isSale, description, buyLink, isFavorite, id,
   } = book;
-
+  
   const openModal = () => {
     clearTimeout(timeotOverflowReset);
     document.body.style.overflow = 'hidden';
@@ -44,7 +44,7 @@ const BookItem = ({ book }) => {
   };
 
   const toggleFavorite = () => {
-    if (!isFavorite) dispatch(Creators.setFavorite(book));
+    if (!isFavorite) dispatch(Creators.setFavorite({ ...book, isFavorite: true }));
     else dispatch(Creators.deleteFavorite(id));
   };
 

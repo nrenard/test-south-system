@@ -26,6 +26,8 @@ export function* getBooks({ payload }) {
       startIndex,
     });
 
+    if (books.error) throw new Error(books.error);
+
     const total = books.totalItems;
     const hasMore = total > startIndex;
 
@@ -46,6 +48,7 @@ export function* getBooks({ payload }) {
     );
   } catch (err) {
     console.log('err: ', err);
+    yield put(Creators.setError('Ocorreu um erro.'));
   }
 }
 
