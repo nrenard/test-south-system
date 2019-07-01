@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
@@ -28,7 +28,7 @@ const BookItem = ({ book }) => {
   const {
     title, smallThumbnail, isSale, description, buyLink, isFavorite, id,
   } = book;
-  
+
   const openModal = () => {
     clearTimeout(timeotOverflowReset);
     document.body.style.overflow = 'hidden';
@@ -85,4 +85,4 @@ BookItem.propTypes = {
   }).isRequired,
 };
 
-export default BookItem;
+export default memo(BookItem);

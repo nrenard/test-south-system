@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 
 import { Container, InputStyle } from './styles';
 
-const Input = ({
-  name, type, placeholder = '', ...props
-}) => (
+const Input = props => (
   <Container>
-    <InputStyle type={type} placeholder={placeholder} name={name} {...props} />
+    <InputStyle {...props} />
   </Container>
 );
 
 Input.propTypes = {
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   type: PropTypes.string,
 };
 
 Input.defaultProps = {
   type: 'text',
+  placeholder: '',
 };
 
 export default Input;
