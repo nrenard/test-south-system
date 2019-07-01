@@ -61,4 +61,12 @@ describe('Books Reducers', () => {
 
     expect(deleteFavorite.list.find(book => book.id === mockBook.id).isFavorite).toBe(false);
   });
+
+  it('it shoul be able to error book', () => {
+    const textError = 'Ocorreu um erro.';
+
+    const state = booksReducer(INITIAL_STATE, BooksActions.setError(textError));
+
+    expect(state.error).toBe(textError);
+  });
 });
