@@ -46,7 +46,7 @@ const ModalDetail = ({ isActive, closeModal, book }) => {
 
   const toggleFavorite = () => {
     if (!isFavorite) {
-      dispatch(Creators.setFavorite(book));
+      dispatch(Creators.setFavorite({ ...book, isFavorite: true }));
     } else {
       dispatch(Creators.deleteFavorite(id));
     }
