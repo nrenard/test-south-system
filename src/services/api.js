@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://www.googleapis.com/books/v1/volumes',
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 api.interceptors.response.use(
